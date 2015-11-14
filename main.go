@@ -30,7 +30,7 @@ func main() {
 	}
 
     for _, c := range vargs.Commands {
-        _, err := exec.Command("/bin/bash", c).Output()
+        _, err := exec.Command("sh", c).Output()
         if err != nil {
             fmt.Println(err.Error())
     		os.Exit(1)
