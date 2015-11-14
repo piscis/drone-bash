@@ -15,15 +15,15 @@ publish:
     username: projectweekend
     password: $$DOCKER_PASS
     email: $$DOCKER_EMAIL
-    repo: projectweekend/drone-bash
+    repo: projectweekend/drone-fabric
     when:
       branch: master
 
 plugin:
   name: Bash
-  desc: Execute bash commands for deployment
+  desc: Execute fabric commands for deployment
   type: deploy
-  image: projectweekend/drone-bash
+  image: projectweekend/drone-fabric
   labels:
     - deployment
     - bash

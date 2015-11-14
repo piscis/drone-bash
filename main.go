@@ -8,15 +8,15 @@ import (
 	"github.com/drone/drone-plugin-go/plugin"
 )
 
-type Bash struct {
-	Commands  []string `json:"commands"`
+type Fabric struct {
+	Commands  string `json:"commands"`
 }
 
 func main() {
 	repo := plugin.Repo{}
 	build := plugin.Build{}
 	system := plugin.System{}
-	vargs := Bash{}
+	vargs := Fabric{}
 
 	plugin.Param("build", &build)
 	plugin.Param("repo", &repo)
@@ -29,12 +29,9 @@ func main() {
 		os.Exit(1)
 	}
 
-    for _, c := range vargs.Commands {
-        _, err := exec.Command("sh", c).Output()
-        if err != nil {
-            fmt.Println(err.Error())
-    		os.Exit(1)
-        }
-    }
-
+	_, err := exec.Command("fab", c).Output()
+	if err != nil {
+		fmt.Println(err.Error())
+		os.Exit(1)
+	}
 }
