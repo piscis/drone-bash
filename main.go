@@ -29,7 +29,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	_, err := exec.Command("fab", c).Output()
+	_, err := exec.Command("fab", vargs.Commands).Output()
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)
