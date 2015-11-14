@@ -20,10 +20,10 @@ publish:
       branch: master
 
 plugin:
-  name: Bash
+  name: Fabric
   desc: Execute fabric commands for deployment
   type: deploy
   image: projectweekend/drone-fabric
   labels:
     - deployment
-    - bash
+    - fabric
