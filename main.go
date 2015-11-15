@@ -40,7 +40,7 @@ func main() {
 		fabArgs := strings.Split(command, " ")
 		// fabArgs = append(fabArgs, "-i", "/tmp/ssh_key")
 
-		c = exec.Command("fab", fabArgs...)
+		c := exec.Command("fab", fabArgs...)
 		c.Stdout = os.Stdout
 		c.Stderr = os.Stderr
 		err := c.Run()
