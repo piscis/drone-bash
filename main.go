@@ -29,6 +29,7 @@ func main() {
 	}
 
 	err := ioutil.WriteFile("/tmp/ssh_key", []byte(workspace.Keys.Public), 0644)
+	log.Println(workspace.Keys.Public)
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(99)
