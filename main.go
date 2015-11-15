@@ -31,7 +31,7 @@ func main() {
 	for _, c := range vargs.Commands {
 		command := fmt.Sprintf("%s %s", fabfile, c)
 		fabArgs := strings.Split(command, " ")
-		_, err := exec.Command("fab", fabArgs).Output()
+		_, err := exec.Command("fab", fabArgs...).Output()
 		if err != nil {
 			fmt.Println(err.Error())
 			os.Exit(2)
