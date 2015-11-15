@@ -41,8 +41,8 @@ func main() {
 		fabArgs = append(fabArgs, "-i", "/tmp/ssh_key")
 		_, err := exec.Command("fab", fabArgs...).Output()
 		if err != nil {
-			fmt.Println(err.Error())
-			os.Exit(2)
+			fmt.Println(err)
+			os.Exit(1000)
 		}
 	}
 }
