@@ -33,7 +33,7 @@ func main() {
 	o, err := exec.Command("fab", vargs.Commands).Output()
 	fmt.Println(o)
 	if err != nil {
-		fmt.Println(err.Error())
+		fmt.Println(err)
 		os.Exit(2)
 	}
 }
