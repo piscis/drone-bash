@@ -9,7 +9,7 @@ import (
 )
 
 type Fabric struct {
-	Commands  string `json:"commands"`
+	Commands  []string `json:"commands"`
 }
 
 func main() {
@@ -25,9 +25,12 @@ func main() {
 		os.Exit(1)
 	}
 
-	fabfile := fmt.Sprintf("%s/fabfile.py", workspace.Path)
+	fabfile := fmt.Sprintf("--fabfile=%s/fabfile.py", workspace.Path)
 
-	fmt.Println(fabfile)
+	for _, c := range vargs.Commands {
+		command := fmt.Sprintf("%s %s", fabfile, c)
+		fmt.Println(command)
+	}
 
 	// fmt.Println(vargs.Commands)
 	// o, err := exec.Command("fab", vargs.Commands).Output()
