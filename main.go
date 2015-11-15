@@ -31,6 +31,10 @@ func main() {
 	}
 
 	err := writeKey(&workspace)
+	if err != nil {
+		log.Println(err)
+		os.Exit(100)
+	}
 
 	fabfile := fmt.Sprintf("--fabfile=%s/fabfile.py", workspace.Path)
 
