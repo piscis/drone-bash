@@ -28,8 +28,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	err := ioutil.WriteFile("/tmp/ssh_key", []byte(workspace.Keys.Public), 0644)
-	log.Println(workspace.Keys.Public)
+	err := ioutil.WriteFile("/tmp/private_key", []byte(workspace.Keys.Private), 0644)
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(99)
@@ -40,7 +39,7 @@ func main() {
 	for _, c := range vargs.Commands {
 		command := fmt.Sprintf("%s %s", fabfile, c)
 		fabArgs := strings.Split(command, " ")
-		fabArgs = append(fabArgs, "-i", "/tmp/ssh_key")
+		fabArgs = append(fabArgs, "-i", "/tmp/private_key")
 
 		c := exec.Command("fab", fabArgs...)
 		c.Stdout = os.Stdout
