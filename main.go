@@ -30,18 +30,19 @@ func main() {
 		os.Exit(1)
 	}
 
-	err := writeKey(&workspace)
-	if err != nil {
+	if err := writeKey(&workspace); err != nil {
+		log.Println("Unable to write private key")
 		log.Println(err)
-		os.Exit(100)
+		os.Exit(1)
 	}
 
-	fabfile := fmt.Sprintf("--fabfile=%s/fabfile.py", workspace.Path)
+	if err := os.Chdir(workspace.Path); err != nil {
+		log.Println("Unable to dc into workspace.Path")
+		os.Exit(1)
+	}
 
 	for _, c := range vargs.Commands {
-		command := fmt.Sprintf("%s %s", fabfile, c)
-		fabArgs := strings.Split(command, " ")
-
+		fabArgs := strings.Split(c, " ")
 		c := exec.Command("fab", fabArgs...)
 		c.Stdout = os.Stdout
 		c.Stderr = os.Stderr
