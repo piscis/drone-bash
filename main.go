@@ -25,7 +25,9 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Println(workspace)
+	fabfile := fmt.Sprintf("%s/fabfile.py", workspace.Path)
+
+	fmt.Println(fabfile)
 
 	// fmt.Println(vargs.Commands)
 	// o, err := exec.Command("fab", vargs.Commands).Output()
