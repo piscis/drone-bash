@@ -3,7 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
-    // "os/exec"
+	"strings"
+	"os/exec"
 
 	"github.com/drone/drone-plugin-go/plugin"
 )
@@ -29,14 +30,11 @@ func main() {
 
 	for _, c := range vargs.Commands {
 		command := fmt.Sprintf("%s %s", fabfile, c)
-		fmt.Println(command)
+		fabArgs := strings.Split(command, " ")
+		_, err := exec.Command("fab", fabArgs).Output()
+		if err != nil {
+			fmt.Println(err.Error())
+			os.Exit(2)
+		}
 	}
-
-	// fmt.Println(vargs.Commands)
-	// o, err := exec.Command("fab", vargs.Commands).Output()
-	// fmt.Println(o)
-	// if err != nil {
-	// 	fmt.Println(err.Error())
-	// 	os.Exit(2)
-	// }
 }
