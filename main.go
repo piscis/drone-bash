@@ -5,8 +5,10 @@ import (
 	"os"
 	"strings"
 	"os/exec"
+	"os/user"
 	"log"
 	"io/ioutil"
+	"path/filepath"
 
 	"github.com/drone/drone-plugin-go/plugin"
 )
@@ -28,10 +30,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	err := ioutil.WriteFile("/tmp/private_key", []byte(workspace.Keys.Private), 0644)
+	err := writeKey(&workspace)
 	if err != nil {
-		fmt.Println(err.Error())
-		os.Exit(99)
+		log.Println(err)
+		os.Exit(100)
 	}
 
 	fabfile := fmt.Sprintf("--fabfile=%s/fabfile.py", workspace.Path)
@@ -39,7 +41,6 @@ func main() {
 	for _, c := range vargs.Commands {
 		command := fmt.Sprintf("%s %s", fabfile, c)
 		fabArgs := strings.Split(command, " ")
-		fabArgs = append(fabArgs, "-i", "/tmp/private_key")
 
 		c := exec.Command("fab", fabArgs...)
 		c.Stdout = os.Stdout
@@ -50,4 +51,23 @@ func main() {
 			os.Exit(101)
 		}
 	}
+}
+
+func writeKey(in *plugin.Workspace) error {
+	if in.Keys == nil || len(in.Keys.Private) == 0 {
+		return nil
+	}
+	home := "/root"
+	u, err := user.Current()
+	if err == nil {
+		home = u.HomeDir
+	}
+	sshpath := filepath.Join(home, ".ssh")
+	if err := os.MkdirAll(sshpath, 0700); err != nil {
+		return err
+	}
+	confpath := filepath.Join(sshpath, "config")
+	privpath := filepath.Join(sshpath, "id_rsa")
+	ioutil.WriteFile(confpath, []byte("StrictHostKeyChecking no\n"), 0700)
+	return ioutil.WriteFile(privpath, []byte(in.Keys.Private), 0600)
 }
