@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 	"os/exec"
-	// "io/ioutil"
+	"log"
 
 	"github.com/drone/drone-plugin-go/plugin"
 )
@@ -27,25 +27,18 @@ func main() {
 		os.Exit(1)
 	}
 
-	// err := ioutil.WriteFile("/tmp/ssh_key", []byte(workspace.Keys.Public), 0644)
-	// if err != nil {
-	// 	fmt.Println(err.Error())
-	// 	os.Exit(1)
-	// }
-
 	fabfile := fmt.Sprintf("--fabfile=%s/fabfile.py", workspace.Path)
 
 	for _, c := range vargs.Commands {
 		command := fmt.Sprintf("%s %s", fabfile, c)
 		fabArgs := strings.Split(command, " ")
-		// fabArgs = append(fabArgs, "-i", "/tmp/ssh_key")
 
 		c := exec.Command("fab", fabArgs...)
 		c.Stdout = os.Stdout
 		c.Stderr = os.Stderr
 		err := c.Run()
 		if err != nil {
-			fmt.Println(err)
+			log.Println(err)
 			os.Exit(101)
 		}
 	}
