@@ -29,6 +29,7 @@ func main() {
 		os.Exit(1)
 	}
 
+	fmt.Println(vargs.Commands)
 	o, err := exec.Command("fab", vargs.Commands).Output()
 	fmt.Println(o)
 	if err != nil {
