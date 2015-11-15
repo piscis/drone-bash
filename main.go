@@ -30,7 +30,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	err := writeKey(workspace)
+	err := writeKey(&workspace)
 
 	fabfile := fmt.Sprintf("--fabfile=%s/fabfile.py", workspace.Path)
 
