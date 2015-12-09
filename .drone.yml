@@ -12,18 +12,18 @@ build:
 
 publish:
   docker:
-    username: projectweekend
+    username: piscis
     password: $$DOCKER_PASS
     email: $$DOCKER_EMAIL
-    repo: projectweekend/drone-fabric
+    repo: piscis/drone-bash
     when:
       branch: master
 
 plugin:
   name: Fabric
-  desc: Execute fabric commands for deployment
+  desc: Execute bash commands for deployment
   type: deploy
-  image: projectweekend/drone-fabric
+  image: piscis/drone-bash
   labels:
     - deployment
-    - fabric
+    - bash
