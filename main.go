@@ -43,7 +43,7 @@ func main() {
 
 	for _, c := range vargs.Commands {
 		fabArgs := strings.Split(c, " ")
-		c := exec.Command("fab", fabArgs...)
+		c := exec.Command(fabArgs...)
 		c.Stdout = os.Stdout
 		c.Stderr = os.Stderr
 		err := c.Run()
