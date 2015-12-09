@@ -20,7 +20,7 @@ publish:
       branch: master
 
 plugin:
-  name: Fabric
+  name: Bash
   desc: Execute bash commands for deployment
   type: deploy
   image: piscis/drone-bash
